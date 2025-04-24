@@ -2,6 +2,6 @@
   "rewrites": [
     { "source": "/(.*)", "destination": "/" }
   ],
-  "buildCommand": "npm install && npm run build",
+  "buildCommand": "npm ci --legacy-peer-deps && npm run build",
   "outputDirectory": "dist"
 }
