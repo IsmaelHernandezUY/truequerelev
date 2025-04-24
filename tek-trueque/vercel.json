@@ -1,7 +1,8 @@
 {
+  "buildCommand": "./build.sh",
+  "outputDirectory": "dist",
   "rewrites": [
     { "source": "/(.*)", "destination": "/" }
-  ],
-  "buildCommand": "npm ci --legacy-peer-deps && npm run build",
-  "outputDirectory": "dist"
+  ]
 }
+
