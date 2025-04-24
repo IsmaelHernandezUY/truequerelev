@@ -1,7 +1,12 @@
 #!/bin/bash
 
-echo "Forzando instalación completa con devDependencies"
+# Salir si hay algún error
+set -e
+
+echo "📦 Instalando dependencias (con devDependencies incluidas)..."
 npm ci
 
-echo "Ejecutando build de Vite"
+echo "🚧 Ejecutando build con Vite..."
 npm run build
+
+echo "✅ Build completo"
