@@ -6,62 +6,62 @@ import { Textarea } from "@/components/ui/textarea";
 
 const allQuestions = [
   {
-    title: "¿Qué te gusta más cuando hacés un trueque?",
+    title: "¿Qué tipo de intercambios preferís realizar?",
     options: [
-      { text: "Conocer gente nueva y hacer comunidad", points: 9 },
-      { text: "Conseguir algo que realmente necesito", points: 6 },
+      { text: "Intercambios de bienes materiales (ropa, herramientas, alimentos, etc.)", points: 6 },
+      { text: "Intercambios de servicios o conocimientos (clases, arreglos, asesorías)", points: 9 },
     ],
   },
   {
-    title: "Si alguien te ofrece enseñarte algo (una receta, un oficio), ¿te interesa?",
+    title: "¿Qué tan dispuesto estás a intercambiar tu tiempo o habilidad como parte de un trueque?",
     options: [
-      { text: "¡Sí! Me encanta aprender cosas nuevas", points: 9 },
-      { text: "Prefiero intercambiar cosas físicas", points: 5 },
+      { text: "Estoy dispuesto, si se valora de forma justa", points: 9 },
+      { text: "Prefiero no ofrecer mi tiempo, solo cosas concretas", points: 5 },
     ],
   },
   {
-    title: "Si alguien necesita ayuda con trámites digitales y te pide un rato de tu tiempo, ¿qué hacés?",
+    title: "¿Qué condiciones te parecen necesarias para aceptar un trueque?",
     options: [
-      { text: "Le ayudo, me gusta dar una mano", points: 8 },
-      { text: "Prefiero usar mi tiempo en otras cosas", points: 5 },
+      { text: "Que haya claridad en lo que se intercambia y acuerdo entre ambas partes", points: 9 },
+      { text: "Que sea algo simple y directo, sin muchas vueltas", points: 6 },
     ],
   },
   {
-    title: "Tenés algo con valor emocional pero que ya no usás, ¿qué hacés?",
+    title: "¿Qué valorás más en un intercambio?",
     options: [
-      { text: "Lo doy si sé que alguien lo va a valorar", points: 9 },
-      { text: "Me cuesta desprenderme aunque no lo use", points: 6 },
+      { text: "La utilidad real de lo que recibo", points: 6 },
+      { text: "La equidad entre lo que doy y lo que recibo, incluyendo el esfuerzo", points: 9 },
     ],
   },
   {
-    title: "¿Qué tan importante es para vos que el trueque sea justo también en lo simbólico (esfuerzo, intención)?",
+    title: "¿Cómo evaluás si un trueque es justo?",
     options: [
-      { text: "Muy importante, el significado cuenta", points: 9 },
-      { text: "Mientras sea práctico, está bien", points: 6 },
+      { text: "Comparo el valor práctico de cada parte", points: 6 },
+      { text: "Considero también el tiempo, dedicación y contexto del otro", points: 9 },
     ],
   },
   {
-    title: "¿Harías un trueque con alguien que no conocés?",
+    title: "¿Estás dispuesto a participar en una red de trueque organizada?",
     options: [
-      { text: "Sí, me gusta abrirme a otras personas", points: 8 },
-      { text: "Prefiero con personas de confianza", points: 6 },
+      { text: "Sí, si hay reglas claras y beneficios para todos", points: 9 },
+      { text: "Solo si me resulta conveniente en lo personal", points: 6 },
     ],
   },
   {
-    title: "¿Qué te motiva a sumarte a una red de trueque?",
+    title: "¿Qué te resulta más atractivo del trueque como práctica?",
     options: [
-      { text: "Creo en otras formas de economía", points: 9 },
-      { text: "Está bueno poder conseguir cosas sin plata", points: 6 },
+      { text: "Poder cubrir necesidades sin usar dinero", points: 6 },
+      { text: "Participar en una forma alternativa y más justa de intercambio", points: 9 },
     ],
   },
   {
-    title: "¿Te interesa intercambiar saberes o habilidades?",
+    title: "¿Aceptarías hacer un trueque si el valor de lo que ofrecés y lo que recibís no es exactamente equivalente?",
     options: [
-      { text: "Sí, el conocimiento también vale mucho", points: 9 },
-      { text: "Prefiero intercambiar cosas materiales", points: 5 },
+      { text: "Sí, si entiendo el contexto o el esfuerzo de la otra persona", points: 9 },
+      { text: "No, prefiero intercambios lo más equilibrados posible", points: 6 },
     ],
   },
-];
+]; // OMITIDO POR PEDIDO
 
 const shuffle = (array) => [...array].sort(() => Math.random() - 0.5);
 
@@ -71,8 +71,9 @@ export default function App() {
   const [selected, setSelected] = useState(null);
   const [answers, setAnswers] = useState([]);
   const [comment, setComment] = useState("");
-  const [personalInfo, setPersonalInfo] = useState({ nombre: "", edad: "", barrio: "" });
+  const [personalInfo, setPersonalInfo] = useState({ nombre: "", edad: "", barrio: "", genero: "" });
   const [infoComplete, setInfoComplete] = useState(false);
+  const [otroGenero, setOtroGenero] = useState("");
 
   useEffect(() => {
     const randomized = shuffle(allQuestions);
@@ -84,7 +85,7 @@ export default function App() {
     setPersonalInfo((prev) => ({ ...prev, [name]: value }));
   };
 
-  const canContinue = personalInfo.nombre.trim() !== "" && personalInfo.barrio.trim() !== "";
+  const canContinue = personalInfo.nombre.trim() !== "" && personalInfo.barrio.trim() !== "" && personalInfo.genero.trim() !== "";
 
   const handleSelect = (option) => setSelected(option);
 
@@ -117,6 +118,8 @@ export default function App() {
         fecha: new Date().toISOString(),
         nombre: personalInfo.nombre,
         barrio: personalInfo.barrio,
+        edad: personalInfo.edad,
+        genero: personalInfo.genero === "Otro" ? otroGenero : personalInfo.genero,
         puntaje: score,
         respuestas: answers.map((r) => ({
           pregunta: r.title,
@@ -137,11 +140,7 @@ export default function App() {
       a.selected.points,
       `"${a.comment || ""}"`,
     ]);
-
-    const csvContent =
-      "data:text/csv;charset=utf-8," +
-      [headers.join(","), ...rows.map((r) => r.join(","))].join("\n");
-
+    const csvContent = "data:text/csv;charset=utf-8," + [headers.join(","), ...rows.map((r) => r.join(","))].join("\n");
     const encodedUri = encodeURI(csvContent);
     const link = document.createElement("a");
     link.setAttribute("href", encodedUri);
@@ -189,6 +188,26 @@ export default function App() {
               onChange={handlePersonalChange}
               className="w-full border rounded p-2"
             />
+            <select
+              name="genero"
+              value={personalInfo.genero}
+              onChange={handlePersonalChange}
+              className="w-full border rounded p-2"
+            >
+              <option value="">Seleccioná tu género</option>
+              <option value="Femenino">Femenino</option>
+              <option value="Masculino">Masculino</option>
+              <option value="Otro">Otro</option>
+            </select>
+            {personalInfo.genero === "Otro" && (
+              <input
+                type="text"
+                placeholder="Ingresá tu identidad de género"
+                value={otroGenero}
+                onChange={(e) => setOtroGenero(e.target.value)}
+                className="w-full border rounded p-2"
+              />
+            )}
             <Button onClick={() => setInfoComplete(true)} disabled={!canContinue}>
               Empezar cuestionario
             </Button>
