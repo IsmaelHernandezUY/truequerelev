@@ -13,55 +13,69 @@ const allQuestions = [
     ],
   },
   {
-    title: "¿Qué tan dispuesto estás a intercambiar tu tiempo o habilidad como parte de un trueque?",
+    title: "¿Alguna vez participaste en un intercambio sin dinero?",
     options: [
-      { text: "Estoy dispuesto, si se valora de forma justa", points: 9 },
-      { text: "Prefiero no ofrecer mi tiempo, solo cosas concretas", points: 5 },
+      { text: "Sí, varias veces", points: 9 },
+      { text: "Una o dos veces", points: 6 },
+      { text: "Nunca, pero me interesa", points: 3 },
+      { text: "No, y no me interesa", points: 0 },
     ],
   },
   {
-    title: "¿Qué condiciones te parecen necesarias para aceptar un trueque?",
+    title: "¿Qué te ayudaría a sentirte más cómodo/a para hacer un trueque?",
     options: [
-      { text: "Que haya claridad en lo que se intercambia y acuerdo entre ambas partes", points: 9 },
-      { text: "Que sea algo simple y directo, sin muchas vueltas", points: 6 },
+      { text: "Saber exactamente cómo funciona", points: 9 },
+      { text: "Ver ejemplos o testimonios de otras personas", points: 6 },
+      { text: "Que haya alguien que me acompañe", points: 3 },
+      { text: "Nada, ya me siento cómodo/a", points: 9 },
     ],
   },
   {
-    title: "¿Qué valorás más en un intercambio?",
+    title: "¿Cómo preferís comunicarte para organizar un intercambio?",
     options: [
-      { text: "La utilidad real de lo que recibo", points: 6 },
-      { text: "La equidad entre lo que doy y lo que recibo, incluyendo el esfuerzo", points: 9 },
+      { text: "Por WhatsApp o mensaje directo", points: 9 },
+      { text: "En persona, en un lugar común", points: 6 },
+      { text: "Por redes sociales (Facebook, Instagram)", points: 3 },
+      { text: "Otro", points: 0 },
     ],
   },
   {
-    title: "¿Cómo evaluás si un trueque es justo?",
+    title: "¿Qué te generaría confianza para participar en una red de intercambios?",
     options: [
-      { text: "Comparo el valor práctico de cada parte", points: 6 },
-      { text: "Considero también el tiempo, dedicación y contexto del otro", points: 9 },
+      { text: "Conocer a la otra persona", points: 9 },
+      { text: "Que la red tenga reglas claras", points: 9 },
+      { text: "Que se haga en un lugar seguro", points: 6 },
+      { text: "Recomendaciones de otras personas", points: 6 },
     ],
   },
   {
-    title: "¿Estás dispuesto a participar en una red de trueque organizada?",
+    title: "¿Qué te gustaría poder intercambiar más adelante?",
     options: [
-      { text: "Sí, si hay reglas claras y beneficios para todos", points: 9 },
-      { text: "Solo si me resulta conveniente en lo personal", points: 6 },
+      { text: "Cosas que ya no uso", points: 6 },
+      { text: "Conocimientos o habilidades que tengo", points: 9 },
+      { text: "Tiempo o acompañamiento", points: 6 },
+      { text: "Todavía no lo sé", points: 3 },
     ],
   },
   {
-    title: "¿Qué te resulta más atractivo del trueque como práctica?",
+    title: "¿Cómo te gustaría que fuera visualmente la aplicación o espacio de intercambio?",
     options: [
-      { text: "Poder cubrir necesidades sin usar dinero", points: 6 },
-      { text: "Participar en una forma alternativa y más justa de intercambio", points: 9 },
+      { text: "Con colores vivos y diseño llamativo", points: 6 },
+      { text: "Minimalista y claro", points: 9 },
+      { text: "No me importa mucho mientras funcione", points: 3 },
+      { text: "Otro", points: 0 },
     ],
   },
   {
-    title: "¿Aceptarías hacer un trueque si el valor de lo que ofrecés y lo que recibís no es exactamente equivalente?",
+    title: "¿Te gustaría que haya un espacio para compartir experiencias y opiniones?",
     options: [
-      { text: "Sí, si entiendo el contexto o el esfuerzo de la otra persona", points: 9 },
-      { text: "No, prefiero intercambios lo más equilibrados posible", points: 6 },
+      { text: "Sí, sería muy útil", points: 9 },
+      { text: "Tal vez, si no es obligatorio", points: 6 },
+      { text: "No, prefiero algo más directo", points: 3 },
     ],
   },
-]; // OMITIDO POR PEDIDO
+];
+
 
 const shuffle = (array) => [...array].sort(() => Math.random() - 0.5);
 
