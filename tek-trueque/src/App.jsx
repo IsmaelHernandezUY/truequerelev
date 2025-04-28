@@ -30,24 +30,7 @@ const allQuestions = [
       { text: "Nada, ya me siento cómodo/a", points: 9 },
     ],
   },
-  {
-    title: "¿Cómo preferís comunicarte para organizar un intercambio?",
-    options: [
-      { text: "Por WhatsApp o mensaje directo", points: 9 },
-      { text: "En persona, en un lugar común", points: 6 },
-      { text: "Por redes sociales (Facebook, Instagram)", points: 3 },
-      { text: "Otro", points: 0 },
-    ],
-  },
-  {
-    title: "¿Qué te generaría confianza para participar en una red de intercambios?",
-    options: [
-      { text: "Conocer a la otra persona", points: 9 },
-      { text: "Que la red tenga reglas claras", points: 9 },
-      { text: "Que se haga en un lugar seguro", points: 6 },
-      { text: "Recomendaciones de otras personas", points: 6 },
-    ],
-  },
+  
   {
     title: "¿Qué te gustaría poder intercambiar más adelante?",
     options: [
@@ -64,14 +47,6 @@ const allQuestions = [
       { text: "Minimalista y claro", points: 9 },
       { text: "No me importa mucho mientras funcione", points: 3 },
       { text: "Otro", points: 0 },
-    ],
-  },
-  {
-    title: "¿Te gustaría que haya un espacio para compartir experiencias y opiniones?",
-    options: [
-      { text: "Sí, sería muy útil", points: 9 },
-      { text: "Tal vez, si no es obligatorio", points: 6 },
-      { text: "No, prefiero algo más directo", points: 3 },
     ],
   },
 ];
