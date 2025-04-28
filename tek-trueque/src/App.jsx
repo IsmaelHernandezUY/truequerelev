@@ -148,7 +148,7 @@ export default function App() {
       >
        <h1 className="text-2xl font-bold">Relevamiento Inicial — Servicio de Trueques</h1>
 <p className="text-sm text-gray-600">
-  El trueque es un intercambio directo de bienes o servicios entre personas, sin usar dinero. Cada parte ofrece algo que tiene y recibe algo que necesita a cambio.
+  El trueque es un intercambio directo de bienes o servicios entre personas, sin usar dinero. Cada persona puede ofrecer algo, esperando que otra persona le de algo que necesite a cambio.
 </p>
 <Progress value={progress} className="h-2 bg-gray-300" />
 
