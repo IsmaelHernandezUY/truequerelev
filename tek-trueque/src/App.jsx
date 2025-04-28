@@ -22,6 +22,18 @@ const allQuestions = [
     ],
   },
   {
+    title: "¿Qué significa para vos hacer un intercambio sin usar dinero?",
+    type: "open",
+  },
+  {
+    title: "¿Cómo imaginás una comunidad basada principalmente en el intercambio?",
+    type: "open",
+  },
+  {
+    title: "¿Qué obstáculos personales creés que te impedirían o dificultarían participar en un trueque?",
+    type: "open",
+  },
+  {
     title: "¿Qué te ayudaría a sentirte más cómodo/a para hacer un trueque?",
     options: [
       { text: "Saber exactamente cómo funciona", points: 9 },
@@ -30,7 +42,6 @@ const allQuestions = [
       { text: "Nada, ya me siento cómodo/a", points: 9 },
     ],
   },
-  
   {
     title: "¿Qué te gustaría poder intercambiar más adelante?",
     options: [
@@ -49,7 +60,17 @@ const allQuestions = [
       { text: "Otro", points: 0 },
     ],
   },
+  {
+    title: "¿Con qué frecuencia te gustaría participar en intercambios?",
+    options: [
+      { text: "Todas las semanas", points: 9 },
+      { text: "Una vez al mes", points: 6 },
+      { text: "Cada tanto, cuando lo necesite", points: 3 },
+      { text: "Muy raramente", points: 0 },
+    ],
+  },
 ];
+
 
 
 const shuffle = (array) => [...array].sort(() => Math.random() - 0.5);
