@@ -18,7 +18,7 @@ const allQuestions = [
   ]},
   { title: "¿Qué significa para vos hacer un intercambio sin usar dinero?", type: "open" },
   { title: "¿Cómo imaginás una comunidad basada principalmente en el intercambio?", type: "open" },
-  { title: "¿Qué obstáculos personales creés que te impedirían participar en un trueque?", type: "open" },
+  { title: "¿Qué obstáculos personales creés que te impedirían o dificultarían participar en un trueque?", type: "open" },
   { title: "¿Qué te ayudaría a sentirte más cómodo/a para hacer un trueque?", options: [
       { text: "Saber exactamente cómo funciona", points: 9 },
       { text: "Ver ejemplos o testimonios", points: 6 },
@@ -130,7 +130,7 @@ export default function App() {
     <div className="min-h-screen bg-gradient-to-br from-neutral-100 to-gray-200 flex flex-col items-center justify-center text-center p-6 font-sans text-gray-800">
       <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} className="max-w-2xl w-full bg-white rounded-xl shadow-md p-8 space-y-6">
         <h1 className="text-2xl font-bold">Relevamiento Inicial — Servicio de Trueques</h1>
-        <p className="text-sm text-gray-600">El trueque es un intercambio directo sin dinero.</p>
+        <p className="text-sm text-gray-600">El trueque es un intercambio directo de bienes o servicios entre personas, sin usar dinero.</p>
         <Progress value={progress} className="h-2 bg-gray-300" />
 
         {!infoComplete ? (
@@ -153,7 +153,7 @@ export default function App() {
         ) : !isLast && questions[level] ? (
           questions[level].type === "open" ? (
             <div className="mt-4">
-              <Textarea placeholder="Escribí tu respuesta..." value={comment} onChange={(e) => setComment(e.target.value)} className="w-full" />
+              <Textarea placeholder="Escribí tu respuesta acá..." value={comment} onChange={(e) => setComment(e.target.value)} className="w-full" />
               <Button onClick={nextLevel} disabled={!comment.trim()} className="mt-4">Continuar</Button>
             </div>
           ) : (
@@ -165,7 +165,7 @@ export default function App() {
               </div>
               {selected && (
                 <>
-                  <Textarea placeholder="Comentario opcional" value={comment} onChange={(e) => setComment(e.target.value)} className="w-full mt-4" />
+                  <Textarea placeholder="¿Querés contarnos por qué elegiste esta opción? (opcional)" value={comment} onChange={(e) => setComment(e.target.value)} className="w-full mt-4" />
                   <Button onClick={nextLevel} className="mt-4">Continuar</Button>
                 </>
               )}
@@ -173,10 +173,21 @@ export default function App() {
           )
         ) : (
           <div className="space-y-6">
-            <p className="text-xl font-semibold">Gracias por participar, {personalInfo.nombre} 💬</p>
-            <p className="text-gray-700 italic">Tu puntaje: {score} / {questions.length * 10}</p>
-            <Button onClick={exportCSV}>Exportar CSV</Button>
-            <Button onClick={restart}>Reiniciar</Button>
+            <p className="text-xl font-semibold text-indigo-700">Gracias por participar, {personalInfo.nombre} 💬</p>
+            <p className="text-gray-700 italic">Tu puntaje total fue: {score} / {questions.length * 10}</p>
+            <div className="space-y-4">
+              {answers.map((ans, i) => (
+                <div key={i} className="text-left border p-4 rounded-lg bg-slate-50">
+                  <p className="font-medium">{ans.title}</p>
+                  <p className="text-sm text-indigo-700 mt-1">Respuesta: {ans.selected?.text || ans.comment}</p>
+                  {ans.comment && <p className="text-sm text-gray-500 mt-2">💬 Comentario: {ans.comment}</p>}
+                </div>
+              ))}
+            </div>
+            <div className="flex gap-4">
+              <Button onClick={restart}>Reiniciar cuestionario</Button>
+              <Button onClick={exportCSV}>Exportar CSV</Button>
+            </div>
           </div>
         )}
       </motion.div>
