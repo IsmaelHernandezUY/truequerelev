@@ -1,4 +1,5 @@
-// src/App.js
+// src/App.jsx
+
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
@@ -7,41 +8,41 @@ import { Textarea } from "@/components/ui/textarea";
 
 const allQuestions = [
   { title: "¿Qué tipo de intercambios preferís realizar?", options: [
-      { text: "Intercambios de bienes materiales (ropa, herramientas, alimentos, etc.)", points: 6 },
-      { text: "Intercambios de servicios o conocimientos (clases, arreglos, asesorías)", points: 9 },
+    { text: "Intercambios de bienes materiales (ropa, herramientas, alimentos, etc.)", points: 6 },
+    { text: "Intercambios de servicios o conocimientos (clases, arreglos, asesorías)", points: 9 },
   ]},
   { title: "¿Alguna vez participaste en un intercambio sin dinero?", options: [
-      { text: "Sí, varias veces", points: 9 },
-      { text: "Una o dos veces", points: 6 },
-      { text: "Nunca, pero me interesa", points: 3 },
-      { text: "No, y no me interesa", points: 0 },
+    { text: "Sí, varias veces", points: 9 },
+    { text: "Una o dos veces", points: 6 },
+    { text: "Nunca, pero me interesa", points: 3 },
+    { text: "No, y no me interesa", points: 0 },
   ]},
   { title: "¿Qué significa para vos hacer un intercambio sin usar dinero?", type: "open" },
   { title: "¿Cómo imaginás una comunidad basada principalmente en el intercambio?", type: "open" },
   { title: "¿Qué obstáculos personales creés que te impedirían o dificultarían participar en un trueque?", type: "open" },
   { title: "¿Qué te ayudaría a sentirte más cómodo/a para hacer un trueque?", options: [
-      { text: "Saber exactamente cómo funciona", points: 9 },
-      { text: "Ver ejemplos o testimonios", points: 6 },
-      { text: "Que haya alguien que me acompañe", points: 3 },
-      { text: "Nada, ya me siento cómodo/a", points: 9 },
+    { text: "Saber exactamente cómo funciona", points: 9 },
+    { text: "Ver ejemplos o testimonios de otras personas", points: 6 },
+    { text: "Que haya alguien que me acompañe", points: 3 },
+    { text: "Nada, ya me siento cómodo/a", points: 9 },
   ]},
   { title: "¿Qué te gustaría poder intercambiar más adelante?", options: [
-      { text: "Cosas que ya no uso", points: 6 },
-      { text: "Conocimientos o habilidades", points: 9 },
-      { text: "Tiempo o acompañamiento", points: 6 },
-      { text: "Todavía no lo sé", points: 3 },
+    { text: "Cosas que ya no uso", points: 6 },
+    { text: "Conocimientos o habilidades que tengo", points: 9 },
+    { text: "Tiempo o acompañamiento", points: 6 },
+    { text: "Todavía no lo sé", points: 3 },
   ]},
-  { title: "¿Cómo te gustaría que fuera visualmente la app de intercambio?", options: [
-      { text: "Con colores vivos y llamativos", points: 6 },
-      { text: "Minimalista y clara", points: 9 },
-      { text: "No me importa mucho mientras funcione", points: 3 },
-      { text: "Otro", points: 0 },
+  { title: "¿Cómo te gustaría que fuera visualmente la aplicación o espacio de intercambio?", options: [
+    { text: "Con colores vivos y diseño llamativo", points: 6 },
+    { text: "Minimalista y claro", points: 9 },
+    { text: "No me importa mucho mientras funcione", points: 3 },
+    { text: "Otro", points: 0 },
   ]},
   { title: "¿Con qué frecuencia te gustaría participar en intercambios?", options: [
-      { text: "Todas las semanas", points: 9 },
-      { text: "Una vez al mes", points: 6 },
-      { text: "Cada tanto", points: 3 },
-      { text: "Muy raramente", points: 0 },
+    { text: "Todas las semanas", points: 9 },
+    { text: "Una vez al mes", points: 6 },
+    { text: "Cada tanto, cuando lo necesite", points: 3 },
+    { text: "Muy raramente", points: 0 },
   ]},
 ];
 
@@ -69,19 +70,27 @@ export default function App() {
   };
 
   const nextLevel = () => {
-    const updated = [...answers];
-    updated[level] = { ...questions[level], selected, comment };
-    setAnswers(updated);
+    const updatedAnswers = [...answers];
+    updatedAnswers[level] = { 
+      ...questions[level], 
+      selected, 
+      comment 
+    };
+    setAnswers(updatedAnswers);
+    setSelected(null);
+    setComment("");
+    const next = level + 1;
+    setLevel(next);
 
-    if (level + 1 >= questions.length) {
+    if (next >= questions.length) {
       const data = {
         fecha: new Date().toISOString(),
         nombre: personalInfo.nombre,
         barrio: personalInfo.barrio,
         edad: personalInfo.edad,
         genero: personalInfo.genero === "Otro" ? otroGenero : personalInfo.genero,
-        puntaje: updated.reduce((sum, r) => sum + (r.selected?.points || 0), 0),
-        respuestas: updated.map((r) => ({
+        puntaje: updatedAnswers.reduce((sum, a) => sum + (a?.selected?.points || 0), 0),
+        respuestas: updatedAnswers.map((r) => ({
           pregunta: r.title,
           respuesta: r.selected?.text || r.comment || "(sin respuesta)",
           puntos: r.selected?.points || 0,
@@ -90,10 +99,6 @@ export default function App() {
       };
       localStorage.setItem("cuestionario_trueque", JSON.stringify(data));
     }
-
-    setSelected(null);
-    setComment("");
-    setLevel((prev) => prev + 1);
   };
 
   const restart = () => {
@@ -103,20 +108,22 @@ export default function App() {
     setSelected(null);
     setComment("");
     setInfoComplete(false);
+    setOtroGenero("");
   };
 
   const exportCSV = () => {
     const headers = ["Pregunta", "Respuesta", "Puntos", "Comentario"];
-    const rows = answers.map((r) => [
-      `"${r.title}"`,
-      `"${r.selected?.text || r.comment || "(sin respuesta)"}"`,
-      r.selected?.points || 0,
-      `"${r.comment || ""}"`,
+    const rows = answers.map((a) => [
+      `"${a.title}"`,
+      `"${a.selected?.text || a.comment || "(sin respuesta)"}"`,
+      a.selected?.points || 0,
+      `"${a.comment || ""}"`,
     ]);
     const csvContent = "data:text/csv;charset=utf-8," + [headers.join(","), ...rows.map((r) => r.join(","))].join("\n");
+    const encodedUri = encodeURI(csvContent);
     const link = document.createElement("a");
-    link.href = encodeURI(csvContent);
-    link.download = "resultados_trueque.csv";
+    link.setAttribute("href", encodedUri);
+    link.setAttribute("download", "resultados_trueque.csv");
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -124,13 +131,15 @@ export default function App() {
 
   const isLast = level >= questions.length;
   const progress = (level / questions.length) * 100;
-  const score = answers.reduce((sum, r) => sum + (r.selected?.points || 0), 0);
+  const score = answers.reduce((sum, a) => sum + (a?.selected?.points || 0), 0);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-neutral-100 to-gray-200 flex flex-col items-center justify-center text-center p-6 font-sans text-gray-800">
       <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} className="max-w-2xl w-full bg-white rounded-xl shadow-md p-8 space-y-6">
         <h1 className="text-2xl font-bold">Relevamiento Inicial — Servicio de Trueques</h1>
-        <p className="text-sm text-gray-600">El trueque es un intercambio directo de bienes o servicios entre personas, sin usar dinero.</p>
+        <p className="text-sm text-gray-600">
+          El trueque es un intercambio directo de bienes o servicios entre personas, sin usar dinero. Cada persona puede ofrecer algo, esperando recibir algo que necesite.
+        </p>
         <Progress value={progress} className="h-2 bg-gray-300" />
 
         {!infoComplete ? (
@@ -148,45 +157,64 @@ export default function App() {
             {personalInfo.genero === "Otro" && (
               <input type="text" placeholder="Ingresá tu identidad de género" value={otroGenero} onChange={(e) => setOtroGenero(e.target.value)} className="w-full border rounded p-2" />
             )}
-            <Button onClick={() => setInfoComplete(true)} disabled={!canContinue}>Empezar cuestionario</Button>
+            <Button onClick={() => setInfoComplete(true)} disabled={!canContinue}>
+              Empezar cuestionario
+            </Button>
           </div>
         ) : !isLast && questions[level] ? (
           questions[level].type === "open" ? (
             <div className="mt-4">
               <Textarea placeholder="Escribí tu respuesta acá..." value={comment} onChange={(e) => setComment(e.target.value)} className="w-full" />
-              <Button onClick={nextLevel} disabled={!comment.trim()} className="mt-4">Continuar</Button>
+              <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="mt-4 space-y-2">
+                <Button onClick={nextLevel} disabled={!comment.trim()}>
+                  Continuar
+                </Button>
+              </motion.div>
             </div>
           ) : (
             <>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
                 {questions[level].options.map((opt) => (
-                  <motion.button whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }} key={opt.text} onClick={() => setSelected(opt)} className={`rounded-lg border p-4 text-sm ${selected?.text === opt.text ? "bg-indigo-600 text-white" : "bg-slate-100 hover:bg-slate-200"}`}>{opt.text}</motion.button>
+                  <motion.button key={opt.text} whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }} onClick={() => setSelected(opt)}
+                    className={`rounded-lg border p-4 text-sm transition-colors duration-200 ${
+                      selected?.text === opt.text ? "bg-indigo-600 text-white border-indigo-600" : "bg-slate-100 hover:bg-slate-200 border-slate-300"
+                    }`}
+                  >
+                    {opt.text}
+                  </motion.button>
                 ))}
               </div>
               {selected && (
                 <>
-                  <Textarea placeholder="¿Querés contarnos por qué elegiste esta opción? (opcional)" value={comment} onChange={(e) => setComment(e.target.value)} className="w-full mt-4" />
-                  <Button onClick={nextLevel} className="mt-4">Continuar</Button>
+                  <div className="mt-4">
+                    <Textarea placeholder="¿Querés contarnos por qué elegiste esta opción? (opcional)" value={comment} onChange={(e) => setComment(e.target.value)} />
+                  </div>
+                  <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="mt-4 space-y-2">
+                    <Button onClick={nextLevel}>Continuar</Button>
+                  </motion.div>
                 </>
               )}
             </>
           )
         ) : (
           <div className="space-y-6">
-            <p className="text-xl font-semibold text-indigo-700">Gracias por participar, {personalInfo.nombre} 💬</p>
-            <p className="text-gray-700 italic">Tu puntaje total fue: {score} / {questions.length * 10}</p>
-            <div className="space-y-4">
+            <div className="text-left space-y-1">
+              <p className="text-xl font-semibold text-indigo-700">Gracias por participar, {personalInfo.nombre} 💬</p>
+              <p className="text-base text-gray-700 italic">Tu puntaje total fue: {score} / {questions.length * 10}</p>
+            </div>
+            <div className="mt-6 border-t pt-4 space-y-4">
+              <h3 className="text-lg font-semibold text-left">Tus respuestas:</h3>
               {answers.map((ans, i) => (
                 <div key={i} className="text-left border p-4 rounded-lg bg-slate-50">
                   <p className="font-medium">{ans.title}</p>
                   <p className="text-sm text-indigo-700 mt-1">Respuesta: {ans.selected?.text || ans.comment}</p>
-                  {ans.comment && <p className="text-sm text-gray-500 mt-2">💬 Comentario: {ans.comment}</p>}
+                  {ans.comment && <p className="text-sm text-gray-500 mt-2">💬 Comentario adicional: {ans.comment}</p>}
                 </div>
               ))}
             </div>
-            <div className="flex gap-4">
+            <div className="flex gap-4 mt-6">
               <Button onClick={restart}>Reiniciar cuestionario</Button>
-              <Button onClick={exportCSV}>Exportar CSV</Button>
+              <Button onClick={exportCSV}>Exportar respuestas</Button>
             </div>
           </div>
         )}
