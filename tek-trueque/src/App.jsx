@@ -226,55 +226,55 @@ export default function App() {
               Empezar cuestionario
             </Button>
           </div>
-        ) : !isLast && questions[level] ? (
-         {questions[level].type === "open" ? (
-  <div className="mt-4">
-    <Textarea
-      placeholder="Escribí tu respuesta acá..."
-      value={comment}
-      onChange={(e) => setComment(e.target.value)}
-      className="w-full"
-    />
-    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="mt-4 space-y-2">
-      <Button onClick={nextLevel} disabled={!comment.trim()}>Continuar</Button>
-    </motion.div>
-  </div>
-) : (
-  <>
-    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
-      {questions[level].options.map((opt) => (
-        <motion.button
-          whileHover={{ scale: 1.03 }}
-          whileTap={{ scale: 0.97 }}
-          key={opt.text}
-          onClick={() => handleSelect(opt)}
-          className={`rounded-lg border p-4 text-sm transition-colors duration-200 ${
-            selected?.text === opt.text
-              ? "bg-indigo-600 text-white border-indigo-600"
-              : "bg-slate-100 hover:bg-slate-200 border-slate-300"
-          }`}
-        >
-          {opt.text}
-        </motion.button>
-      ))}
-    </div>
-    {selected && (
-      <div className="mt-4">
-        <Textarea
-          placeholder="¿Querés contarnos por qué elegiste esta opción? (opcional)"
-          value={comment}
-          onChange={(e) => setComment(e.target.value)}
-        />
-      </div>
-    )}
-    {selected && (
+        ) : {!isLast && questions[level] ? (
+  questions[level].type === "open" ? (
+    <div className="mt-4">
+      <Textarea
+        placeholder="Escribí tu respuesta acá..."
+        value={comment}
+        onChange={(e) => setComment(e.target.value)}
+        className="w-full"
+      />
       <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="mt-4 space-y-2">
-        <Button onClick={nextLevel}>Continuar</Button>
+        <Button onClick={nextLevel} disabled={!comment.trim()}>Continuar</Button>
       </motion.div>
-    )}
-  </>
-)}
-        ) : (
+    </div>
+  ) : (
+    <>
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
+        {questions[level].options.map((opt) => (
+          <motion.button
+            whileHover={{ scale: 1.03 }}
+            whileTap={{ scale: 0.97 }}
+            key={opt.text}
+            onClick={() => handleSelect(opt)}
+            className={`rounded-lg border p-4 text-sm transition-colors duration-200 ${
+              selected?.text === opt.text
+                ? "bg-indigo-600 text-white border-indigo-600"
+                : "bg-slate-100 hover:bg-slate-200 border-slate-300"
+            }`}
+          >
+            {opt.text}
+          </motion.button>
+        ))}
+      </div>
+      {selected && (
+        <>
+          <div className="mt-4">
+            <Textarea
+              placeholder="¿Querés contarnos por qué elegiste esta opción? (opcional)"
+              value={comment}
+              onChange={(e) => setComment(e.target.value)}
+            />
+          </div>
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="mt-4 space-y-2">
+            <Button onClick={nextLevel}>Continuar</Button>
+          </motion.div>
+        </>
+      )}
+    </>
+  )
+) : (
           <div className="space-y-6">
             <div className="text-left space-y-1">
               <p className="text-xl font-semibold text-indigo-700">
