@@ -146,8 +146,12 @@ export default function App() {
         animate={{ opacity: 1, y: 0 }}
         className="max-w-2xl w-full bg-white rounded-xl shadow-md p-8 space-y-6"
       >
-        <h1 className="text-2xl font-bold">Relevamiento Inicial — Servicio de Trueques</h1>
-        <Progress value={progress} className="h-2 bg-gray-300" />
+       <h1 className="text-2xl font-bold">Relevamiento Inicial — Servicio de Trueques</h1>
+<p className="text-sm text-gray-600">
+  El trueque es un intercambio directo de bienes o servicios entre personas, sin usar dinero. Cada parte ofrece algo que tiene y recibe algo que necesita a cambio.
+</p>
+<Progress value={progress} className="h-2 bg-gray-300" />
+
 
         {!infoComplete ? (
           <div className="space-y-4 text-left">
