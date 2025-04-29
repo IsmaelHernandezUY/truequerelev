@@ -161,9 +161,12 @@ export default function App() {
               Empezar cuestionario
             </Button>
           </div>
-        ) : !isLast && questions[level] ? (
-  <div className="mt-4 text-left space-y-4">
-    <h2 className="text-lg font-semibold text-gray-800">{questions[level].title}</h2>
+       ) : (!isLast && questions[level]) ? (
+  <div className="mt-4 text-left space-y-6">
+    <div className="text-center">
+      <h2 className="text-xl font-semibold text-gray-900">{questions[level].title}</h2>
+      <p className="text-sm text-gray-500">Pregunta {level + 1} de {questions.length}</p>
+    </div>
 
     {questions[level].type === "open" ? (
       <>
@@ -173,7 +176,7 @@ export default function App() {
           onChange={(e) => setComment(e.target.value)}
           className="w-full"
         />
-        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="mt-4 space-y-2 text-center">
+        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="mt-4 text-center">
           <Button onClick={nextLevel} disabled={!comment.trim()}>Continuar</Button>
         </motion.div>
       </>
@@ -199,14 +202,13 @@ export default function App() {
 
         {selected && (
           <>
-            <div className="mt-4">
-              <Textarea
-                placeholder="¿Querés contarnos por qué elegiste esta opción? (opcional)"
-                value={comment}
-                onChange={(e) => setComment(e.target.value)}
-              />
-            </div>
-            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="mt-4 space-y-2 text-center">
+            <Textarea
+              placeholder="¿Querés contarnos por qué elegiste esta opción? (opcional)"
+              value={comment}
+              onChange={(e) => setComment(e.target.value)}
+              className="mt-4"
+            />
+            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="mt-4 text-center">
               <Button onClick={nextLevel}>Continuar</Button>
             </motion.div>
           </>
@@ -215,6 +217,7 @@ export default function App() {
     )}
   </div>
 ) : (
+
 
           <div className="space-y-6">
             <div className="text-left space-y-1">
