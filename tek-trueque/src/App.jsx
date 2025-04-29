@@ -163,15 +163,19 @@ export default function App() {
           </div>
         ) : !isLast && questions[level] ? (
           questions[level].type === "open" ? (
-            <div className="mt-4">
-              <Textarea placeholder="Escribí tu respuesta acá..." value={comment} onChange={(e) => setComment(e.target.value)} className="w-full" />
-              <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="mt-4 space-y-2">
-                <Button onClick={nextLevel} disabled={!comment.trim()}>
-                  Continuar
-                </Button>
-              </motion.div>
-            </div>
-          ) : (
+  <div className="mt-4 text-left space-y-4">
+    <h2 className="text-lg font-semibold text-gray-800">{questions[level].title}</h2>
+    <Textarea
+      placeholder="Escribí tu respuesta acá..."
+      value={comment}
+      onChange={(e) => setComment(e.target.value)}
+      className="w-full"
+    />
+    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="mt-4 space-y-2 text-center">
+      <Button onClick={nextLevel} disabled={!comment.trim()}>Continuar</Button>
+    </motion.div>
+  </div>
+) : (
             <>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
                 {questions[level].options.map((opt) => (
